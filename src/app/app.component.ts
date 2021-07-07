@@ -1,10 +1,66 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
+
+
 export class AppComponent {
-  title = 'dynamic-counter';
+
+
+
+  @HostListener('window:scroll', ['$event']) onScrollEvent($event: any) {
+    // console.log($event['Window']);
+    console.log("scrolling");
+    console.log(window.pageYOffset);
+    var y = document.querySelector('.stats')?.getBoundingClientRect().top;
+    if (y) {
+      var y_new = y;
+    } else {
+      y_new = 752;
+    }
+    if (window.pageYOffset > y_new && !this.scrolling) {
+      this.citiesstop = setInterval(() => {
+        this.cities_final = Math.floor(this.cities_final / 10) * 10;
+        this.cities += 10;
+        if (this.cities == this.cities_final) { clearInterval(this.citiesstop); }
+      }, 10)
+
+      this.collegesstop = setInterval(() => {
+        this.col_final = Math.floor(this.col_final / 10) * 10
+        this.colleges += 10;
+        if (this.colleges == this.col_final) {
+
+          clearInterval(this.collegesstop);
+        }
+      }, 10)
+
+
+      this.membersstop = setInterval(() => {
+        this.members_final = Math.floor(this.members_final / 100) * 100
+        this.members += 100;
+        if (this.members == this.members_final) {
+
+          clearInterval(this.membersstop);
+        }
+      }, 10);
+      this.scrolling = true;
+
+    }
+
+  }
+  cities: number = 0;
+  cities_final: number = 544;
+  colleges: number = 0;
+  col_final: number = 1733;
+  members: number = 0;
+  members_final: number = 7500;
+  citiesstop: any;
+  collegesstop: any;
+  membersstop: any;
+  scrolling: boolean = false;
+
 }
