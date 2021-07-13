@@ -14,24 +14,25 @@ export class AppComponent {
 
   @HostListener('window:scroll', ['$event']) onScrollEvent($event: any) {
     // console.log($event['Window']);
-    console.log("scrolling");
-    console.log(window.pageYOffset);
-    var y = document.querySelector('.stats')?.getBoundingClientRect().top;
+
+    var y = document.querySelector('.cards')?.getBoundingClientRect().bottom;
     if (y) {
       var y_new = y;
     } else {
-      y_new = 752;
+      y_new = 1000;
     }
     if (window.pageYOffset > y_new && !this.scrolling) {
+      console.log('executing');
+      console.log(window.pageYOffset);
       this.citiesstop = setInterval(() => {
         this.cities_final = Math.floor(this.cities_final / 10) * 10;
-        this.cities += 10;
+        this.cities += 5;
         if (this.cities == this.cities_final) { clearInterval(this.citiesstop); }
       }, 10)
 
       this.collegesstop = setInterval(() => {
         this.col_final = Math.floor(this.col_final / 10) * 10
-        this.colleges += 10;
+        this.colleges += 5;
         if (this.colleges == this.col_final) {
 
           clearInterval(this.collegesstop);
@@ -41,7 +42,7 @@ export class AppComponent {
 
       this.membersstop = setInterval(() => {
         this.members_final = Math.floor(this.members_final / 100) * 100
-        this.members += 100;
+        this.members += 50;
         if (this.members == this.members_final) {
 
           clearInterval(this.membersstop);
